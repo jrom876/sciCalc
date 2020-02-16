@@ -15,7 +15,7 @@ To run main in the ubuntu linux terminal, type the following:
 
       ./main
 
-To run mc.mk makefile, type:
+To make mc.mk, type:
 
       make -f mc.mk
 
