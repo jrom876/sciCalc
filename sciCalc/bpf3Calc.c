@@ -1,11 +1,11 @@
-// bpf3Calc.c //
+// bpf2Calc.c //
 
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "bpf3Calc.h"
+#include "bpf2Calc.h"
 #define PI        3.14159265358979323846
 #define DATA_SIZE 1000
 //#define OBP       2
