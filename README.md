@@ -15,7 +15,7 @@ To run main in the ubuntu linux terminal, type the following:
 
       ./main
 
-To make mc.mk, type:
+To update and recompile dependencies (make) using mc.mk, type:
 
       make -f mc.mk
 
