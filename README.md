@@ -1,13 +1,13 @@
 # sciCalc
-A simple, expandable UI written in C for calculating various scientific values of use to the RF Hardware Engineer.
+A simple, expandable user interface (UI) written in C for calculating various scientific values of use to the RF Hardware Engineer.
 
 It contains: 
 
-      executables to test each .c file; 
+      executables to test each .c file 
 
-      a main executable UI; 
+      a main executable UI 
 
-      2 different makefile versions.
+      2 different makefile versions
 
 To run main in the ubuntu linux terminal, type the following:
 
