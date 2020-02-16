@@ -19,6 +19,6 @@ To update and recompile dependencies (make) using mc.mk, type:
 
       make -f mc.mk
 
-Please do not use the bpf2Calc.h and bpf3Calc.c files until further notice.
+Please do not use the bpf2Calc and bpf3Calc files until further notice.
 
 This version is in early development and still needs verification, optimization, unit clarification, and clean-up.
