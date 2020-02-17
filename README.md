@@ -21,4 +21,4 @@ To make (update and recompile dependencies) using mc.mk, type:
 
 Please do not use the bpf2Calc and bpf3Calc files until further notice.
 
-This version is in early development and still needs verification, optimization, unit clarification, and clean-up.
+This version is in early development and still needs documentation, verification, optimization, unit clarification, and general clean-up. 
