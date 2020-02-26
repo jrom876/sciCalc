@@ -40,8 +40,8 @@ float calcVSWRPwr( float pf, float pr ) {
 }
 
 char * floatToStringVSWR(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileVSWR(float input){
@@ -50,7 +50,7 @@ void storeDataInFileVSWR(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileVSWR(){
