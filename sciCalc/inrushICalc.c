@@ -24,23 +24,23 @@ float tempf;
 ////////////////////////////////
 ///// Set required values //////
 void setValuesIC(void){
-  printf("Enter input AC Voltage:\n");
+  	printf("Enter input AC Voltage:\n");
 	scanf(" %f", &vac);
-  printf("Enter input frequency:\n");
+  	printf("Enter input frequency:\n");
 	scanf(" %f", &freqHz);
-  printf("Enter output current:\n");
+  	printf("Enter output current:\n");
 	scanf(" %f", &iout);
-  printf("Enter output voltage:\n");
+  	printf("Enter output voltage:\n");
 	scanf(" %f", &vout);
-  printf("Enter net capacitance:\n");
+  	printf("Enter net capacitance:\n");
 	scanf(" %f", &netCap);
-  printf("Enter system impedance:\n");
+  	printf("Enter system impedance:\n");
 	scanf(" %f", &zSystem);
 }
 //////////////////////////////////////
 /// Calculate Capacitive Reactance ///
 float calcXC(){
-  xc = (1/(2*PI*freqHz*netCap));
+  	xc = (1/(2*PI*freqHz*netCap));
 	printf("Net Capacitive Reactance = %.4f Ohms\n", xc);
 	tempf = xc;
 	return xc;
@@ -87,9 +87,9 @@ float calcMaxI() {
 ///// Calculate Steady State Current /////
 float calcSSI(){
 	float pout = vout*iout;
-  //ssi = (0.9*(pout/vac));
-  setSSI();
-  printf("Steady State System Current = %.4f Amps\n", ssi);
+  	//ssi = (0.9*(pout/vac));
+  	setSSI();
+  	printf("Steady State System Current = %.4f Amps\n", ssi);
 	//printf("%.4f\n", ssi);
 	tempf = ssi;
 	return ssi;
@@ -97,14 +97,14 @@ float calcSSI(){
 
 float setSSI(){
 	float pout = vout*iout;
-  ssi = (0.9*(pout/vac));
+  	ssi = (0.9*(pout/vac));
 	tempf = ssi;
 	return ssi;
 }
 ////////////////////////////////////
 char * floatToStringIC(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileIC(float input){
@@ -113,7 +113,7 @@ void storeDataInFileIC(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileIC(){
@@ -143,16 +143,16 @@ int getUserInputIC(){
 			calcMinRes();
 			break;
 		case 2:
-      calcSSI();
+      			calcSSI();
 			break;
 		case 3:
-      calcMaxI();
+      			calcMaxI();
 			break;
 		case 4:
-      calcXC();
+      			calcXC();
 			break;
 		case 5:
-      setValuesIC();
+      			setValuesIC();
 			break;
 		case 6:
 			clearDataFromFileIC();
@@ -184,14 +184,14 @@ int getUserInputIC(){
 
 // float calcSSI(float i, float v, float v_ac){
 // 	float pout = v*i;
-//   ssi = (0.9*(pout/v_ac));
+//   	ssi = (0.9*(pout/v_ac));
 // 	printf("Steady State Current = %.4f Amps\n", ssi);
 // 	tempf = ssi;
 // 	return ssi;
 // }
 /// Calculate Total Energy of Capacitor Bank ///
 // float calcETotal(float c, float v){
-//   eTotal = (c*(v*v))/2;
+//   	eTotal = (c*(v*v))/2;
 // 	printf("%.4f\n", eTotal);
 // 	tempf = eTotal;
 // 	return eTotal;
@@ -200,14 +200,14 @@ int getUserInputIC(){
 //https://electronics.stackexchange.com/questions/272000/
 // inrush-current-calculation-in-capacitive-circuite
 // float calcIRC(float vac, float c2){
-//   irc = 2*PI*vac*c2;
+//   	irc = 2*PI*vac*c2;
 // 	printf("%.4f\n", irc);
 // 	tempf = irc;
 // 	return irc;
 // }
 //
 // float calcPeakI(float Vripple, float tcharge, float c2){
-//   pki = 1.5*(Vripple/tcharge)*c2;
+//   	pki = 1.5*(Vripple/tcharge)*c2;
 // 	printf("%.4f\n", pki);
 // 	tempf = pki;
 // 	return pki;
@@ -216,7 +216,7 @@ int getUserInputIC(){
 /////////////////////////////////////
 // IR Current for a capacitor bank //
 // float findirc(float vac, float vfwd, float esr){
-//   float irp = (((1.414*vac)-vfwd)/esr);
+//   	float irp = (((1.414*vac)-vfwd)/esr);
 // 	printf("%.4f\n", irp);
 // 	tempf = irp;
 // 	return irp;
