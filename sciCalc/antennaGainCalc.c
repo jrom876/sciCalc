@@ -52,8 +52,8 @@ void printLambda(){
 // clear all data from the .txt file if requested.
 ////////////////////////////////////////////
 char * floatToStringAG(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	    char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileAG(float input){
@@ -62,7 +62,7 @@ void storeDataInFileAG(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileAG(){
@@ -87,12 +87,12 @@ int getUserInputAG(){
 	scanf(" %i", &var);
 	switch (var) {
 		case 1:
-			printf("Please enter efficiency: \n");
+		        printf("Please enter efficiency: \n");
 			scanf(" %f", &e);
-      printf("Please enter aperature area in m^2: \n");
-      scanf(" %f", &a);
-      printf("Please enter frequency in Hz: \n");
-      scanf(" %f", &f);
+		        printf("Please enter aperature area in m^2: \n");
+		        scanf(" %f", &a);
+		        printf("Please enter frequency in Hz: \n");
+		        scanf(" %f", &f);
 			calcAntGain(e, a, f);
 			break;
 		case 2:
@@ -109,7 +109,7 @@ int getUserInputAG(){
 			break;
 		case 6:
 			clearDataFromFileAG();
-      printf("antennaGainData.txt is now cleared of all data");
+      			printf("antennaGainData.txt is now cleared of all data");
 			break;
 		case 7:
 			printf("Writing data to file\n");
