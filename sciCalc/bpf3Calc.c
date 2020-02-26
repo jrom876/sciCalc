@@ -138,8 +138,8 @@ float calcBW_2(){
 // clear all data from the .txt file if requested.
 ////////////////////////////////////////////
 char * floatToStringBPF(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileBPF(float input){
@@ -148,12 +148,12 @@ void storeDataInFileBPF(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileBPF(){
-  FILE * fPtr = fopen("bpfData.txt", "w");
-  fclose(fPtr);
+  	FILE * fPtr = fopen("bpfData.txt", "w");
+  	fclose(fPtr);
 }
 
 int getUserInputBPF(){
@@ -179,8 +179,8 @@ int getUserInputBPF(){
 		case 1:
 			printf("Please enter C temp: \n");
 			scanf(" %f", &c);
-  		printf("Please enter C temp: \n");
-  		scanf(" %f", &c);
+  			printf("Please enter C temp: \n");
+  			scanf(" %f", &c);
 			printf("Please enter C temp: \n");
 			scanf(" %f", &c);
 			ctof(c);
