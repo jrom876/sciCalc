@@ -21,8 +21,8 @@ float calcFresnelRadius( float freqG, float distKM ) {
 }
 
 char * floatToStringFC(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileFC(float input){
@@ -31,7 +31,7 @@ void storeDataInFileFC(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileFC(){
