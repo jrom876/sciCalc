@@ -48,8 +48,8 @@ float ktof(float k){
 }
 
 char * floatToStringTC(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileTC(float input){
@@ -58,7 +58,7 @@ void storeDataInFileTC(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileTC(){
@@ -112,9 +112,9 @@ int getUserInputTC(){
 			scanf(" %f", &c);
 			ktof(c);
 			break;
-    case 7:
+    		case 7:
 			clearDataFromFileTC();
-      printf("tempData.txt is now cleared of all data");
+      			printf("tempData.txt is now cleared of all data");
 			break;
 		case 8:
 			printf("Writing data to file\n");
