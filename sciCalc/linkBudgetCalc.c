@@ -26,8 +26,8 @@ float twoWayPathLossDB(float freq, float dist, float rxs){
 ////////////////////////////////
 ////////////////////////////////
 char * floatToStringLB(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileLB(float input){
@@ -36,21 +36,21 @@ void storeDataInFileLB(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileLB(){
-  FILE * fPtr = fopen(TXT_FILE, "w");
-  fclose(fPtr);
+  	FILE * fPtr = fopen(TXT_FILE, "w");
+  	fclose(fPtr);
 }
 
 int getUserInputLB(){
 	float f, d, xs;
-  int exitFlag = 0;
+  	int exitFlag = 0;
 	int var;
 	printf("Please choose from the following: \n");
 	printf("1 to calculate twoWayPathLossDB \n");
-  printf("6 to clear all data from linkBudgetData.txt\n");
+  	printf("6 to clear all data from linkBudgetData.txt\n");
 	printf("7 for store to file\n");
 	printf("8 for quit\n");
 	scanf(" %i", &var);
@@ -63,7 +63,7 @@ int getUserInputLB(){
 			printf("Please enter radar cross section area in m^2: \n");
 			scanf(" %f", &xs);
 			twoWayPathLossDB(f,d,xs);
-      break;
+      			break;
 		case 2:
 
 			break;
@@ -71,9 +71,9 @@ int getUserInputLB(){
 
 			break;
 		case 6:
-      clearDataFromFileLB();
-      printf("linkBudgetData.txt is now cleared of all data");
-      break;
+			clearDataFromFileLB();
+			printf("linkBudgetData.txt is now cleared of all data");
+			break;
 		case 7:
 			printf("Writing data to file\n");
 			storeDataInFileLB(tempf);
