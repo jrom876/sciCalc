@@ -147,8 +147,8 @@ void computeValues(float cf, float bw, float ind, int ch){
 // and allow users to select menu choices.
 ////////////////////////////////////////////
 char * floatToStringBPF2(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileBPF2(float input){
@@ -157,12 +157,12 @@ void storeDataInFileBPF2(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileBPF2(){
-  FILE * fPtr = fopen(TXT_FILE, "w");
-  fclose(fPtr);
+  	FILE * fPtr = fopen(TXT_FILE, "w");
+  	fclose(fPtr);
 }
 
 int getUserInputBPF2(){
@@ -181,7 +181,7 @@ int getUserInputBPF2(){
 	printf("8 for Chebychev 0.5dB with 3 tuned circuits\n");
 	printf("9 for Chebychev 1.0dB with 3 tuned circuits\n");
 	printf("10 for Bessel with 3 tuned circuits\n");
-  printf("11 to clear bpfData.txt\n");
+  	printf("11 to clear bpfData.txt\n");
 	printf("12 for store to file\n");
 	printf("13 for quit\n");
 	scanf(" %i", &var);
@@ -189,8 +189,8 @@ int getUserInputBPF2(){
 		case 1:
 			printf("Please enter Center Frequency in Hz: \n");
 			scanf(" %f", &cf);
-  		printf("Please enter 3dB bandwidth n Hz: \n");
-  		scanf(" %f", &bw);
+  			printf("Please enter 3dB bandwidth n Hz: \n");
+  			scanf(" %f", &bw);
 			printf("Please enter inductor value in Henries: \n");
 			scanf(" %f", &ind);
 			ctof(c);
