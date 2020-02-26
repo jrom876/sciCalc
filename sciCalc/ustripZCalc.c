@@ -45,8 +45,8 @@ float calcZoutMM(float hm, float wm, float tm, float er){
 ////////////////////////////////
 ////////////////////////////////
 char * floatToStringUS(float f){
-		char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	char buffer[DATA_SIZE];
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileUS(float input){
@@ -55,7 +55,7 @@ void storeDataInFileUS(float input){
 	//fgets(data, DATA_SIZE, fPtr);
 	fputs(data, fPtr);
 	fputs("\n", fPtr);
-  fclose(fPtr);
+  	fclose(fPtr);
 }
 
 void clearDataFromFileUS(){
@@ -87,7 +87,7 @@ int getUserInputUS(){
 			printf("Please enter dielectric constant: \n");
 			scanf(" %f", &er);
 			calcZoutMils(hmils,wmils,tmils,er);
-      break;
+      			break;
 		case 2:
 			printf("Please enter height in mm: \n");
 			scanf(" %f", &hmm);
@@ -109,10 +109,10 @@ int getUserInputUS(){
 			scanf(" %f", &mm);
 			convertMMToMils(mm);
 			break;
-    case 5:
-      clearDataFromFileUS();
-      printf("ustripZData.txt is now cleared of all data\n");
-      break;
+	    	case 5:
+	      		clearDataFromFileUS();
+	      		printf("ustripZData.txt is now cleared of all data\n");
+	      		break;
 		case 6:
 			printf("Writing data to file\n");
 			storeDataInFileUS(tempf);
