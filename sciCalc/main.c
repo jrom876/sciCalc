@@ -63,13 +63,13 @@ void getInputMain(){
       //
       break;
     case 10: // quit
-			printf("Quitting\n");
-			exitFlag = 1;
-			break;
-		default:
-			printf("Wrong choice. Now exiting.\n");
-			exitFlag = 1;
-			break;
+      printf("Quitting\n");
+      exitFlag = 1;
+      break;
+      default:
+      printf("Wrong choice. Now exiting.\n");
+      exitFlag = 1;
+      break;
     }
   if(0 != exitFlag) exit(0);
   getInputMain();
