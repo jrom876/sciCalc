@@ -65,7 +65,7 @@ void setKQValues(int choice){
 
 float calcQ2(void){
   float result = Obp*q2;
-  float q2;
+  //float q2;
   // printf("Q2 = %f\n",result);
   // tempf = result;
   return result;
