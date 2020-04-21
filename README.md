@@ -9,7 +9,7 @@ It contains:
 
       2 different makefile versions
 
-To run main in the ubuntu linux terminal, type the following:
+To run main on the ubuntu linux terminal, type the following:
 
       gcc -o main main.c -lm -lrt
 
