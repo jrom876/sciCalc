@@ -11,4 +11,4 @@ To run the main user interface, type:
       
 Please do not use the bpf2Calc and bpf3Calc files until further notice.
 
-This version is in early development and still needs documentation, verification, optimization, unit clarification, and general clean-up. 
+This app is in early development and still needs documentation, verification, optimization, unit clarification, and general clean-up. 
