@@ -10,21 +10,21 @@ DEBUG=-g
 LIBS=-lm -lrt -lpthread
 
  main : \
- 				main.o \
-				tempCalc.o \
-				vswrCalc.o \
-				ustripZCalc.o \
-				fresnelCalc.o \
-				antennaGainCalc.o \
-				linkBudgetCalc.o
+ 	main.o \
+	tempCalc.o \
+	vswrCalc.o \
+	ustripZCalc.o \
+	fresnelCalc.o \
+	antennaGainCalc.o \
+	linkBudgetCalc.o
 
 	$(CC) -o main main.o tempCalc.o vswrCalc.o ustripZCalc.o fresnelCalc.o linkBudgetCalc.o antennaGainCalc.o $(LIBS)
 
 #*** Targets ***
 
 main.o : main.c tempCalc.h \
-			vswrCalc.h ustripZCalc.h \
-			fresnelCalc.h linkBudgetCalc.h
+	vswrCalc.h ustripZCalc.h \
+	fresnelCalc.h linkBudgetCalc.h
 	$(CC) -c main.c $(LIBS)
 
 tempCalc.o : tempCalc.c tempCalc.h
@@ -43,7 +43,7 @@ linkBudgetCalc.o : linkBudgetCalc.c linkBudgetCalc.h
 	$(CC) -c linkBudgetCalc.c $(LIBS)
 
 antennaGainCalc.o : antennaGainCalc.c linkBudgetCalc.h
-		$(CC) -c antennaGainCalc.c $(LIBS)
+	$(CC) -c antennaGainCalc.c $(LIBS)
 
 clean:
 	rm main main.o tempCalc.o vswrCalc.o ustripZCalc.o fresnelCalc.o linkBudgetCalc.o antennaGainCalc.o
