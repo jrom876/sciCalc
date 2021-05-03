@@ -14,7 +14,7 @@ float tempf;
 
 // Functions //
 float calcFresnelRadius( float freqG, float distKM ) {
-	float result = (17.31*sqrt(distKM/(4*freqG)));
+	float result = (17.31*sqrt(distKM/(4*freqG)))/2;
 	printf("%.4f\n", result);
 	tempf = result;
 	return result;
