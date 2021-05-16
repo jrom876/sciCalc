@@ -1,4 +1,6 @@
-// inrushICalc.h //
+// inrushICalc.h 
+#ifndef INRUSHCALC_H
+#define INRUSHCALC_H
 
 ////////// Functions ///////////
 
@@ -18,4 +20,6 @@ char * floatToStringIC(float f);
 void storeDataInFileIC(float input);
 void clearDataFromFileIC();
 int getUserInputIC();
-//
+
+
+#endif
