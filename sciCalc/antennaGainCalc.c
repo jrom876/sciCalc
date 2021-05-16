@@ -1,7 +1,31 @@
+//	Package:	sciCalc
+//	File:		antennaGainCalc.c 
+//	Purpose:	Calculate Antenna Gain and convert freq <==> wavelength
+//	Author:		jrom876
 
-// File:		antennaGainCalc.c 
-// Purpose:		Calculate Antenna Gain and convert freq <==> wavelength
-// Author:		jrom876
+/**
+	Copyright (C) 2019, 2021 
+	Jacob Romero, Creative Engineering Solutions, LLC
+	cesllc876@gmail.com
+	admin@jrom.io 
+
+	This program is free software; you can redistribute it
+	and/or modify it under the terms of the GNU General Public 
+	License as published by the Free Software Foundation, version 2.
+
+	This program is distributed in the hope that it will be
+	useful, but WITHOUT ANY WARRANTY; without even the implied 
+	warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	
+	See the GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public
+	License along with this program; if not, write to:
+	The Free Software Foundation, Inc.
+	59 Temple Place, Suite 330
+	Boston, MA 02111-1307 USA
+
+**/
 
 #include <stdint.h>
 #include <string.h>
@@ -14,6 +38,12 @@
 #define DATA_SIZE     1000
 #define TXT_FILE "antennaGainData.txt"
 
+#define ETA_T (eta * zmismatch)
+#define LAMBDA (LIGHT_SPEED/frequency)
+
+// References:	https://www.antenna-theory.com/basics/impedance.php
+// Antenna Efficiency = Pwr_radiated / Pwr_received
+
 // BN: Lambda always means wavelength(m), and eta
 // always means % efficiency in this program
 
@@ -21,7 +51,8 @@ float eta       = 0; // antenna efficiency - %
 float lambda    = 0; // wavelength - meters
 float aperature = 0; // antenna aperature - meters^2
 float frequency = 0; // frequency - hertz
-float gain      = 0;
+float gain      = 0; // gain = power radiated / power received
+float zmismatch	= 0; // impedance mismatch between tx line and antenna
 float tempf;
 //int exitFlag = 0;
 
@@ -30,42 +61,42 @@ float calcAntGainFromFreq(float et, float ap, float fr){
   float lam = calcLambda(fr);
   float result = ((10*log10((et*4*PI*ap)/(lam*lam))));
   printf("Parabolc Antenna gain = %f\n\n",result);
-  eta = et; aperature = ap; frequency = fr;
+  eta = et; aperature = ap; frequency = fr; lambda = lam;
   gain = result; tempf = result;
   return result;
 }
 
 float calcAntGainFromLambda(float et, float ap, float lam){
-  float frq = calcFreq(lam);
-  float result = (10*log10((et*4*PI*ap)/(lam*lam)));
-  printf("Parabolc Antenna gain = %f\n\n",result);
-  eta = et; aperature = ap; frequency = frq;
+  float fr = calcFreq(lam);
+  float result = ((10*log10((et*4*PI*ap)/(lam*lam))));
+  printf("Parabolc Antenna gain = %.4f\n\n",result);
+  eta = et; aperature = ap; frequency = fr; lambda = lam;
   gain = result; tempf = result;
   return result;
 }
-
+// use freq in MHz
 float calcLambda(float freq){
   float clambda = LIGHT_SPEED/(freq*1000000);
-  printf("\nwavelength = %f \n",clambda);
+  printf("\nwavelength = %.6f \n",clambda);
   tempf = clambda;
   return clambda;
 }
-
+// use lambda in meters 
 float calcFreq(float lam){
-  float freq = LIGHT_SPEED/lam;
-  printf("\nfrequency = %f \n",freq);
+  float freq = (LIGHT_SPEED/lam)/1000000;
+  printf("\nfrequency = %.4f MHz\n",freq);
   tempf = freq;
   return freq;
 }
 
 void printLambda(){
   //lambda = LIGHT_SPEED/frequency;
-  printf("wavelength = %f meters\n",lambda);
+  printf("wavelength = %.6f mm\n",LAMBDA*1000);
 }
 
 void printFreq(){
   //frequency = LIGHT_SPEED/lambda;
-  printf("wavelength = %f meters\n",frequency);
+  printf("frequency = %.4f MHz\n",frequency/1000000);
 }
 
 ////////////////////////////////////////////
@@ -160,6 +191,7 @@ int getUserInputAG(){
 			break;
 		default:
 			printf("Wrong choice. Now exiting.\n");
+			exit(0);
 			exitFlag = 1;
 			break;
 	}
@@ -168,9 +200,16 @@ int getUserInputAG(){
 }
 
 //
-// int main(int argc, char const *argv[]) {
-//   calcAntGain(0.92, 100, 25000000);
-//   printLambda(2400000000);
-//   getUserInputAG();
-//   return 0;
-// }
+//~ int main(int argc, char const *argv[]) {
+	//~ eta = 0.9;
+	//~ zmismatch = 0.9;
+	//~ frequency = 300000000;
+	//~ printFreq();
+	//~ printLambda();
+	//~ printf("ETA_T: \t\t%.5f\n",ETA_T);
+	//~ printf("LAMBDA: \t%.5f\n",LAMBDA);
+	//~ calcAntGainFromFreq(0.92, 100, 25000000);
+	//~ printLambda(2400000000);
+	//~ getUserInputAG();
+	//~ return 0;
+//~ }
