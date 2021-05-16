@@ -2,8 +2,8 @@
 //	Package:	sciCalc
 //	File:		bpf2Calc.c 
 //	Purpose:	Calculate Band Pass Filter component values for 
-//				Butterworth, Chebychev, and Bessel filters with 
-//				2 or 3 resonant circuits using the K-Q Method
+//			Butterworth, Chebychev, and Bessel filters with 
+//			2 or 3 resonant circuits using the K-Q Method
 //	Author:		jrom876
 
 /**
