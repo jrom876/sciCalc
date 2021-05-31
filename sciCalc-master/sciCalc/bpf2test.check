@@ -1,0 +1,238 @@
+// bpf2test.check
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <check.h>
+#include "bpf1Calc.c"
+#include "bpf2Calc.c"
+#include "bpf3Calc.c"
+#define PI            3.14159265358979323846 // ad infinitum
+#define LIGHT_SPEED   299792458 // meters per second
+#define KILO 1000
+#define MEGA 1000000
+#define GIGA 1000000000
+#define TERA 1000000000000 
+
+//// IMPORTANT: Be sure to include the .c file, not the .h file.
+//// This gives us access to all static members of the .c file.
+
+//// To generate and run test code automatically,
+//// run the following commands on the linux command line.
+//// checkmk bpf2test.check >bpf2test.c
+//// make -f make-test.mk bpf2test
+
+struct bpf_test {
+    float 	cf;
+    float 	bw;
+    float 	ind;
+    int 	choice;
+};
+
+#test bpf2test
+void runThis(void){
+	int c,d,e;
+	int numTests = 1;
+	struct bpf_test f1;
+	//f1.cf = 10.1;
+	//f1.bw = 500;
+	//f1.ind = 1;
+	//f1.choice = 2;
+
+	for (c = 0; c < 1; c++) {
+	// This is the initialization loop because it only has 1 iteration.
+	// Initialize all variables here.
+		printf("\nSanity Check \tStart bpf2test");
+	
+		f1.cf = 10;						
+		f1.bw = 500;						
+		f1.ind = 1;
+		f1.choice = 4;	
+		
+	// This is the first test loop, for broader incremental iteration, 
+	// variable set-reset, or for simple loop multiplication.	
+		for (d = 0; d < 1; d++) {
+			//f1.cf = 10;						
+			//f1.bw += 100;
+			//f1.choice += 1;						
+			//f1.ind += 0.1;	
+			
+	// This is the main (inner) loop, for finest incremental iteration
+			for (e = 1; e <= 1; e++) {			
+				//f1.cf -= 0.1;					
+				//f1.bw += 100;
+				//f2.choice = (((f2.choice+1) <= 5)&&((f2.choice)>0))?f2.choice+1:f2.choice;						
+				//f1.ind += 0.1;
+				//printBPF2Test(f1);
+				printf("\nInitial test2 settings:\nmain loop number %d\ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d",e,f1.cf,f1.bw,f1.choice);
+				
+				struct comp_2 holder = setValues_2(f1.cf, f1.bw, f1.ind, f1.choice);
+				//BBT_2(holder, 2.2);
+				BBT_2(holder, (50/holder.R1));	
+				
+				fail_if((f1.cf<= 0 || f1.bw<= 0 || f1.ind<= 0), "Whoah, those values dont make sense!!");
+				fail_if((((f1.cf*MEGA)/(f1.bw*KILO)) < 10.1) , "That Q is %.3f which is too small, because BW is too wide",	(f1.cf*MEGA)/(f1.bw*KILO));
+				//fail_unless((rxPwrDBM(t1.PtdBm,t1.GtdB,t1.GrdB,t1.R,t1.freq))*TERA < 3690, "WTF?");				
+			}	
+		}
+	}
+}
+//runThis();
+
+#test bpf3test
+void runThat(void){
+	int i,j, k;
+	int numTests = 10;
+	struct bpf_test f2;	
+	float scaler = 2.2;
+	f2.cf = 10;						
+	f2.bw = 500;						
+	f2.ind = 1;	
+	f2.choice = 4;
+
+	for (i = 0; i < 1; i++) {
+	// This is the initialization loop because it only has 1 iteration.
+	// Initialize all variables here.
+		printf("\nSanity Check \tStart bpf3test");
+			if (i == 1){
+				f2.cf = 10;						
+				f2.bw = 500;						
+				f2.ind = 1;	
+				f2.choice = 4;
+			}
+		
+	// This is the first test loop, for broader incremental iteration, 
+	// variable set-reset, or for simple loop multiplication.	
+		for (j = 0; j < 1; j++) {
+			//f2.cf = 10;						
+			//f2.bw += 100;
+			//f2.choice += 1;						
+			//f2.ind += 0.1;	
+			
+	// This is the main (inner) loop, for finest incremental iteration
+			for (k = 1; k <= 1; k++) {			
+				//f2.cf -= 0.1;					
+				//f2.bw += 10000;
+				//f2.choice = (((f2.choice+1) <= 5)&&((f2.choice)>0))?f2.choice+1:f2.choice;						
+				//f2.ind += 0.00001;
+				//printBPF3Test(f2);
+				
+				printf("\nInitial test3 settings:\nmain loop number %d\ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d",k,f2.cf,f2.bw,f2.choice);			
+				
+				struct comp_3 holder3 = setValues_3(f2.cf, f2.bw, f2.ind, f2.choice);
+				//NT_3(holder3, scaler);
+				NT_3(holder3, (50/holder3.R1));
+				//NT_3(holder3, (75/holder3.R1));
+				
+				//struct comp_3 holder3 = setValues_3(2400, 300000, 0.001, f2.choice);
+				
+				//printf("\nSanity Check\ttest3 main loop\t\tIteration number %d \ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d",k,f2.cf,f2.bw,f2.choice);			
+				
+				//NT_3(holder3, (50/holder3.R1));
+				
+				fail_if((f2.cf<= 0 || f2.bw<= 0 || f2.ind<= 0), "Whoah, those values dont make sense!!");
+				fail_if((((f2.cf*MEGA)/(f2.bw*KILO)) < 10.1) , "That Q %.3f is too small, because BW is too wide");
+				//ck_assert_int_eq(((f2.cf*MEGA)/(f2.bw*KILO)), 10.0);
+				//fail_unless((rxPwrDBM(t1.PtdBm,t1.GtdB,t1.GrdB,t1.R,t1.freq))*TERA < 3690, "WTF?");
+				
+			}	
+		}
+	}
+}
+
+runThat();
+
+#test bpf1test
+void runHither(void){
+	int i, j, k;
+	int numTests = 10;
+	struct bpf_test f3, f4;	
+	float scaler = 2.2;
+	f3.cf = 10;						
+	f3.bw = 500;						
+	f3.ind = 1;	
+	f3.choice = 4;
+	
+	f4.cf = 100;						
+	f4.bw = 5000;						
+	f4.ind = 0.1;	
+	f4.choice = 4;
+
+	for (i = 0; i < 1; i++) {
+	// This is the initialization loop.
+	// Initialize all variables here.
+		printf("\nSanity Check \tRun Hither\tStart bpf1test");
+			if (i == 1){
+				f3.cf = 100;						
+				f3.bw = 5000;						
+				f3.ind = 0.1;	
+				f3.choice = 4;
+			}
+			else if (i == 2){
+				f3.cf = 200;						
+				f3.bw = 10000;						
+				f3.ind = 0.047;	
+				f3.choice = 4;
+			}
+		
+	// This is the first test loop, for broader incremental iteration, 
+	// variable set-reset, or for simple loop multiplication.	
+		for (j = 0; j < 1; j++) {
+			//f3.cf = 10;						
+			//f3.bw += 100;
+			//f3.choice += 1;						
+			//f3.ind += 0.1;	
+			
+	// This is the main (inner) loop, for finest incremental iteration
+			for (k = 1; k <= 1; k++) {			
+				//f3.cf -= 0.1;					
+				//f3.bw += 10000;
+				//f3.choice = (((f3.choice+1) <= 5)&&((f3.choice)>0))?f3.choice+1:f3.choice;						
+				//f3.ind += 0.00001;
+				//printBPF1(f3);				
+				printf("\nInitial test1 settings:\nmain loop number %d\ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d\n",k,f3.cf,f3.bw,f3.choice);			
+				struct comp_1 holder1 = setValues_LPF1(f3.cf, f3.bw, f3.ind, f3.choice);
+				printf("\nPost test1 settings:\nmain loop number %d\ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d\n",k,f3.cf,f3.bw,f3.choice);			
+
+										
+				//f4.cf -= 0.1;					
+				//f4.bw += 10000;
+				//f4.choice = (((f4.choice+1) <= 5)&&((f4.choice)>0))?f4.choice+1:f4.choice;						
+				//f4.ind += 0.00001;
+				//printBPF1(f4);				
+				//printf("\nInitial test1 settings:\nmain loop number %d\ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d\n",k,f4.cf,f4.bw,f4.choice);							
+				//struct comp_1 holder2 = setValues_1(f4.cf, f4.bw, f4.ind, f4.choice);
+				//printf("\Post test1 settings:\nmain loop number %d\ncenter freq %.4f MHz\nBW %.4f kHz\nChoice %d\n",k,f4.cf,f4.bw,f4.choice);							
+				
+				
+			}	
+		}
+	}
+}
+//runHither();
+
+// START_TEST(test_alpha)
+//		printf"\nTEST\n");
+//    uint8_t bytes[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 170};
+//    bitreader_t* b = bitreader_new(bytes, sizeof(bytes));
+//
+//    ck_assert_int_eq(bitreader_read_uint8(b), 1);
+//    ck_assert_int_eq(bitreader_read_uint16(b), 515);
+//    ck_assert_int_eq(bitreader_read_uint24(b), 263430);
+//    ck_assert_int_eq(bitreader_read_uint32(b), 117967114);
+//    ck_assert_int_eq(bitreader_read_uint64(b), 72623859790382856);
+//    ck_assert(!bitreader_eof(b));
+//    ck_assert(bitreader_read_bit(b));
+//    ck_assert(!bitreader_eof(b));
+//    ck_assert(!bitreader_read_bit(b));
+//    ck_assert_int_eq(bitreader_read_bits(b, 2), 2);
+//    ck_assert_int_eq(bitreader_read_bits(b, 4), 10);
+//    ck_assert(bitreader_eof(b));
+//    ck_assert(!b->error);
+//    bitreader_skip_bits(b, 1);
+//    ck_assert(b->error);
+
+//    bitreader_free(b);
+//END_TEST //
+//test_alpha();
