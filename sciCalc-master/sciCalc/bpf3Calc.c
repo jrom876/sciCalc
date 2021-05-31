@@ -357,7 +357,7 @@ float modBPF_C_3(float wl, float r, float frq){
 	
 	Examples:
 		NT_3(holder3, (2.2/1.0)); 		Scaling 1.0 uH to 2.2uH inductor
-		NT_3(holder3, (2.2/holder3.L1)); 	Scaling output to 2.2uH inductor
+		NT_3(holder3, (2.2/holder3.L3)); 	Scaling output to 2.2uH inductor
 		NT_3(holder3, (50/holder3.R2)); 	Scaling output to 50 Ohm resistor
 		NT_3(holder3, (75/holder3.R2)); 	Scaling output to 75 Ohm resistor
 **/
