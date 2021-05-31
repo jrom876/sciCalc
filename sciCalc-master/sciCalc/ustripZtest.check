@@ -1,0 +1,87 @@
+// ustripZtest.check
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <check.h>
+#include "ustripZCalc.c"
+#define PI            3.14159265358979323846 // ad infinitum
+#define LIGHT_SPEED   299792458 // meters per second
+#define KILO 1000
+#define MEGA 1000000
+#define GIGA 1000000000
+#define TERA 1000000000000 
+
+//// IMPORTANT: Be sure to include the .c file, not the .h file.
+//// This gives us access to all static members of the .c file.
+
+//// To generate and run test code automatically,
+//// run the following commands on the linux command line.
+//// checkmk ustripZtest.check >ustripZtest.c
+//// make -f make-test.mk ustripZtest
+
+struct us_test {  	
+	float er;
+  	float width;
+  	float th;
+  	float height;
+};
+
+#test ustripZtest
+void runThis(void){
+	int c,d,e;
+	int numTests = 1;
+	struct us_test f1; 
+	f1.er = 4.2;	
+// next 3 values in mm
+  	f1.width = 1.4;
+  	f1.th = 0.035; // (1 oz/ft2 = 0.035 mm)
+  	f1.height = 0.794;
+
+	for (c = 0; c < 1; c++) {
+	// This is the initialization loop because it only has 1 iteration.
+	// Initialize all variables here.
+		printf("\nSanity Check \tStart ustripZtest");	
+			
+		//f1.er = 4.2;
+		//f1.width = 1.5;
+		//f1.th = 0.035;
+		//f1.height = 0.794;
+		
+	// This is the first test loop, for broader incremental iteration, 
+	// variable set-reset, or for simple loop multiplication.	
+		for (d = 0; d < 1; d++) {
+			//f1.er += 0.1;
+			//f1.width += 0.1;
+			//f1.th += 0.001;
+			//f1.height += 0.01;
+			
+	// This is the main (inner) loop, for finest incremental iteration
+			for (e = 1; e <= 3; e++) {	
+			
+			// Pre-test incrementation (better think twice!!)
+				//f1.er += 0.1;
+				//f1.width += 0.1;
+				//f1.th += 0.001;
+				//f1.height += 0.01;
+				
+				//printUS(f1);
+				printf("\nCurrent ustripZtest trace settings:\nmain loop number\t%d\n",e);
+				printf("dielectric er\t\t%.4f\nwidth\t\t\t%.4f mm\nthickness\t\t%.4f mm\nheight\t\t\t%.4f mm\n",f1.er,f1.width,f1.th,f1.height);
+				//printf("Net Capacitance\t\t%.4f uF\nSystem Z\t\t%.4f ohms\nESR of NTC and Caps\t%.4f ohms\n",f1.tnetCap,f1.tzSystem,f1.tresr);
+				
+				struct USZ holder = setValuesUS(f1.er,f1.width,f1.height);
+				//printUS(holder);
+				struct USZ holder1 = putValuesUS(f1.er,f1.width,f1.th,f1.height);
+			
+			// Post-test incrementation	(preferred)
+				//f1.er += 0.1;
+				f1.width += 0.1;
+				//f1.th += 0.001;
+				//f1.height += 0.01;			
+			}	
+		}
+	}
+}
+runThis();
