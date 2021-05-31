@@ -1,8 +1,8 @@
 //	Package:	sciCalc
 //	File:		bpf3Calc.c 
 //	Purpose:	Calculate Band Pass Filter component values for 
-//				Butterworth, Chebychev, and Bessel filters with
-//				3 resonant circuits using the K-Q Method
+//			Butterworth, Chebychev, and Bessel filters with
+//			3 resonant circuits using the K-Q Method
 //	Author:		jrom876
 
 /**
@@ -59,28 +59,28 @@ float kf_3 = 0; // frequency scaling factor
 
 /**
  * Steps for 3 element k-q method:
- *		1) 	Choose filter type
- * 		2) 	Calculate the pass band “Q”, Qbp
- * 				Qbp = Fo / BW 3dB
+ *	1) 	Choose filter type
+ * 	2) 	Calculate the pass band “Q”, Qbp
+ * 			Qbp = Fo / BW 3dB
  *  	3) 	Calculate the loaded Q for input and output resonator, Q1 and Q3
- * 				Q1_3 = Qbp * q1_3
- * 				Q3_3 = Qbp * q3_3
+ * 			Q1_3 = Qbp * q1_3
+ * 			Q3_3 = Qbp * q3_3
  *  	4) 	Calculate the coupling coefficients, K12 and K23, for this filter
- * 				K12_3 = k12_3 / Qbp
- * 				K23_3 = k23_3 / Qbp
+ * 			K12_3 = k12_3 / Qbp
+ * 			K23_3 = k23_3 / Qbp
  *  	5) 	Choose Inductor value
- * 		6)	Calculate Resistor values, R1 and R2
+ * 	6)	Calculate Resistor values, R1 and R2
  *  	7) 	Calculate the nodal capacitance, Cnode3, which resonates with the inductor at Fo
- * 				Cnode_3 = 1 / ((2Pi*Fo)^2 * L)
+ * 			Cnode_3 = 1 / ((2Pi*Fo)^2 * L)
  *  	8) 	Calculate the coupling capacitors, C12 and C23
- * 				C12_3 = K12_3 * Cnode3
- * 				C23_3 = K23_3 * Cnode3
- *		9)	Finally the values of C1, C2 and C3 can be calculated. 
- *			These are the capacitors that resonate with the inductors at Fo, 
- *			less the value of the coupling capacitor C12
- * 				C1_3 = Cnode3 – C12_3
- * 				C2_3 = Cnode3 – C12_3 – C23_3
- * 				C3_3 = Cnode3 – C12_3
+ * 			C12_3 = K12_3 * Cnode3
+ * 			C23_3 = K23_3 * Cnode3
+ *	9)	Finally the values of C1, C2 and C3 can be calculated. 
+ *		These are the capacitors that resonate with the inductors at Fo, 
+ *		less the value of the coupling capacitor C12
+ * 			C1_3 = Cnode3 – C12_3
+ * 			C2_3 = Cnode3 – C12_3 – C23_3
+ * 			C3_3 = Cnode3 – C12_3
  **/
 
 struct comp_3 {
@@ -108,7 +108,7 @@ float lCH_05_3, q1CH_05_3,  q3CH_05_3,  k12CH_05_3, k23CH_05_3,	cnodeCH_05_3; //
 float lCH_1_3,  q1CH_1_3,   q3CH_1_3,   k12CH_1_3,  k23CH_1_3,	cnodeCH_1_3;  // Chebychev 1.0dB
 float lBES_3,   q1BES_3,    q3BES_3,    k12BES_3,   k23BES_3,	cnodeBES_3;   // Bessel
 
-//	Qbp = Fo / BW 3dB
+// Qbp = Fo / BW 3dB
 float calcQbp_3(float cf, float bw){
 	Qbp_3 = (cf/bw);
 	//~ printf("Qbp = %f\n",Qbp); // DBPRINT
@@ -351,12 +351,12 @@ float modBPF_C_3(float wl, float r, float frq){
 	may need to scale to a 50 Ohm or 75 Ohm output resistor. 
 	
 		fin = the BPF3 whose output stage we are modifying. We will
-				use setValues_3() to create and test our BPF3 for now.
+			use setValues_3() to create and test our BPF3 for now.
 				
 		scale = the transform coefficient to which we are scaling. 
 	
 	Examples:
-		NT_3(holder3, (2.2/1.0)); 			Scaling 1.0 uH to 2.2uH inductor
+		NT_3(holder3, (2.2/1.0)); 		Scaling 1.0 uH to 2.2uH inductor
 		NT_3(holder3, (2.2/holder3.L1)); 	Scaling output to 2.2uH inductor
 		NT_3(holder3, (50/holder3.R2)); 	Scaling output to 50 Ohm resistor
 		NT_3(holder3, (75/holder3.R2)); 	Scaling output to 75 Ohm resistor
