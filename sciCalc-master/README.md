@@ -9,8 +9,7 @@ To run the main user interface, type:
 
       ./main
       
-Please do not use the bpf2Calc and bpf3Calc files until further notice.
 
-This app is in early development and still needs lots of work, but it is still quite functional. 
+This app is in continuous development and needs work, but it is still quite functional. 
 
 Feel free to branch off and fix stuff.
