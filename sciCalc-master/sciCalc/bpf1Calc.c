@@ -1,7 +1,7 @@
 //	Package:	sciCalc
 //	File:		bpf1Calc.c 
 //	Purpose:	Calculate component values and other values for band pass
-//				filters with variable numbers of resonant circuits 
+//			filters with variable numbers of resonant circuits 
 //	Author:		jrom876
 
 /**
