@@ -10,6 +10,6 @@ To run the main user interface, type:
       ./main
       
 
-This app is in continuous development and needs work, but it is still quite functional. 
+This app is in continuous development and needs work here and there, but it is still quite functional. 
 
 Feel free to branch off and fix stuff.
