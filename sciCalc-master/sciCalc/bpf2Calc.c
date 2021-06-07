@@ -228,25 +228,25 @@ void setKQValues(int ch){
 
 /**
  * Steps for 2 element k-q method:
- *		1) 	Choose filter type
- * 		2) 	Calculate the pass band “Q”, Qbp
- * 				Qbp = Fo / BW 3dB
+ *	1) 	Choose filter type
+ * 	2) 	Calculate the pass band “Q”, Qbp
+ * 			Qbp = Fo / BW 3dB
  *  	3) 	Calculate the loaded Q for input and output resonator, Q1 and Q2
- * 				Q1 = Qbp * q1
- * 				Q2 = Qbp * q2
+ * 			Q1 = Qbp * q1
+ * 			Q2 = Qbp * q2
  *  	4) 	Calculate the coupling coefficient K12 for this filter
- * 				K12 = k12 / Qbp
+ * 			K12 = k12 / Qbp
  *  	5) 	Choose Inductor value
- * 		6)	Calculate Resistor values, R1 and R2
+ * 	6)	Calculate Resistor values, R1 and R2
  *  	7) 	Calculate the nodal capacitance, Cnode, which resonates with the inductor at Fo
- * 				Cnode = 1 / ((2Pi*Fo)^2 * L)
+ * 			Cnode = 1 / ((2Pi*Fo)^2 * L)
  *  	8) 	Calculate the coupling capacitor C12
- * 				C12 = K12 * Cnode
- *		9)	Finally the values of C1 and C2 can be calculated. 
- *			These are the capacitors that resonate with the inductors at Fo, 
- *			less the value of the coupling capacitor C12
- * 				C1 = Cnode – C12
- * 				C2 = Cnode – C12
+ * 			C12 = K12 * Cnode
+ *	9)	Finally the values of C1 and C2 can be calculated. 
+ *		These are the capacitors that resonate with the inductors at Fo, 
+ *		less the value of the coupling capacitor C12
+ * 			C1 = Cnode – C12
+ * 			C2 = Cnode – C12
  **/
 
 float calcQ1(void){
@@ -436,7 +436,7 @@ void printBPF2(struct comp_2 f1) {
 ////////////////////////////////////////////
 char * floatToStringBPF2(float f){
 	char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileBPF2(float input){
