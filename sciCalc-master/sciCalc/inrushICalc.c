@@ -222,20 +222,20 @@ int getUserInputIC(){
 			calcMinRes();
 			break;
 		case 2:
-      		calcSSI();
+      			calcSSI();
 			break;
 		case 3:
-      		calcMaxI();
+      			calcMaxI();
 			break;
 		case 4:
-      		calcXC();
+      			calcXC();
 			break;
 		case 5:
       		//~ setValuesIC();
 			break;
 		case 6:
 			//~ setValuesIC();
-      		getIC_specs();
+      			getIC_specs();
 			break;
 		case 7:
 			clearDataFromFileIC();
