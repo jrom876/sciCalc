@@ -48,14 +48,14 @@
 
 /**
  * Steps for evaluating Inrush Current:
- *		1) 	Calculate Minimum Resistance, Rmin
- * 				Rmin = sqrt(2) * (Vac/I) = 1.414 * Vac/I
- * 		2) 	Calculate steady-state current, Iss
- * 				Iss = (Pout/Vac) * Efficiency(assume 90%) = 0.9*(Pout/Vac))
- * 		3) 	Estimate the peak inrush current under a no-load condition
- * 				Iip = ((1.414*Vac) - Vf) / Resr
+ *	1) 	Calculate Minimum Resistance, Rmin
+ * 			Rmin = sqrt(2) * (Vac/I) = 1.414 * Vac/I
+ * 	2) 	Calculate steady-state current, Iss
+ * 			Iss = (Pout/Vac) * Efficiency(assume 90%) = 0.9*(Pout/Vac))
+ * 	3) 	Estimate the peak inrush current under a no-load condition
+ * 			Iip = ((1.414*Vac) - Vf) / Resr
  *  	4) 	Calculate total energy, Etot
- * 				Etot = (C*V^2) / 2
+ * 			Etot = (C*V^2) / 2
  *  	5) 	Design current limiter with these parameters
  * 				
  **/
