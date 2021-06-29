@@ -13,7 +13,7 @@ To update all automated tests at once, type:
 
       make -f make-test.mk
 
-To create Bash scripts for make and test, run the following aliases on the linux CLI:
+To create Bash scripts for make and test, customize and run something like the following aliases on the linux CLI:
 
       alias ccsciCalc='cd ~/sciCalc-master; \
 		make -f mc.mk; \
