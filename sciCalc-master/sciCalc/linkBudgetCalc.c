@@ -38,7 +38,7 @@
 #include <math.h>
 #include <check.h>
 #include "linkBudgetCalc.h"
-#define PI	3.14159265358979323846 // ad infinitum
+#define PI	3.14159265358979323846 // ad infinitum non repeto
 #define LIGHT_SPEED		299792458 // meters per second
 #define DATA_SIZE 1000
 #define KILO 1000
