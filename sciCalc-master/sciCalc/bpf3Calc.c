@@ -118,8 +118,6 @@ void setKQValues_3(int ch){
 	f3dB2rbw = f3dB2rbw_3;
 	choice_3 = ch;
 	switch(choice_3){
-// 3 resonant circuit filters
-		// 3 resonant circuit filters
 		case 1:
 		  q1_3 = Q1BW_3;
 		  k12_3 = K12BW_3;
