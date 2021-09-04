@@ -28,7 +28,7 @@ LIBS=-lcheck -lm -lpthread -lrt -lsubunit -lcheck_pic
 
 #************************************************************************
 ##### AUTOMATED TEST BATTERIES ##### 
-all: lbtest bpf2test inrushItest ustripZtest
+all: lbtest bpf2test bpf3test inrushItest ustripZtest
 
 ## Link Budget 
 lbtest.o: lbtest.c linkBudgetCalc.h
