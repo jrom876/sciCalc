@@ -1,0 +1,136 @@
+// bpf3test.check
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <check.h>
+#include "bpf1Calc.c"
+#include "bpf2Calc.c"
+#include "bpf3Calc.c"
+#define PI            3.14159265358979323846 // ad infinitum
+#define LIGHT_SPEED   299792458 // meters per second
+#define KILO 1000
+#define MEGA 1000000
+#define GIGA 1000000000
+#define TERA 1000000000000 
+
+//// IMPORTANT: Be sure to include the .c file, not the .h file.
+//// This gives us access to all static members of the .c file.
+
+//// To generate and run test code automatically,
+//// run the following commands on the linux command line.
+//// checkmk bpf3test.check >bpf3test.c
+//// make -f make-test.mk bpf3test
+
+//struct bpf3_test {
+//    float 	cf_MHz;
+//    float 	bw_kHz;
+//    float 	ind_uH;
+//    int 	filter_t;
+//};
+
+
+#test bpf3test
+void Run_BPF3_AutoTest_Loop(void){
+	int j, k;
+	int numTests = 5;
+	float scaler = 2.2;
+	
+	struct bpf3_test f3;	
+	f3.cf_MHz = 2400;						
+	f3.bw_kHz = 100000;						
+	f3.ind_uH = 0.001;	
+	f3.filter_t = 4;	
+	
+	struct bpf3_test f4;	
+	f4.cf_MHz = 240;						
+	f4.bw_kHz = 10000;						
+	f4.ind_uH = 0.01;	
+	f4.filter_t = 3;
+	
+	struct bpf3_test f5;	
+	f5.cf_MHz = 12;						
+	f5.bw_kHz = 500;						
+	f5.ind_uH = 0.5;	
+	f5.filter_t = 4;
+		
+	// This is the first test loop, for broader incremental iteration, 
+	// variable set-reset, or for simple loop multiplication.	
+	//	for (j = 0; j < numTests; j++) {
+	//		f3.cf_MHz = 2400;						
+	//		f3.bw_kHz += 1000;
+	//		f3.filter_t = 4;						
+	//		f3.ind_uH = 0.001;	
+			
+	// This is the main (inner) loop, for finest incremental iteration
+			for (k = 1; k <= 1; k++) {			
+				//f3.cf_MHz -= 0.1;					
+				//f3.bw_kHz += 10000;
+				//f3.filter_t = (((f3.filter_t+1) <= 5)&&((f3.filter_t)>0))?f3.filter_t+1:f3.filter_t;						
+				//f3.ind_uH += 0.00001;
+				//printBPF3Test(f3);
+				
+				printf("\nInitial TEST 3 settings:\nmain loop number %d\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d",k,f3.cf_MHz,f3.bw_kHz,f3.filter_t);			
+				////printf("\nSanity Check\ttest 3 main loop\nIteration number %d\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d\n",k,f3.cf_MHz,f3.bw_kHz,f3.filter_t);
+				////struct comp_3 holder3 = computeValues_3(f3.filter_t);
+				//struct comp_3 holder3 = setValues_3(f3.cf_MHz, f3.bw_kHz, f3.ind_uH, f3.filter_t);	
+				struct comp_3 holder3 = putValues_3(f3);
+				printBPF3(holder3);
+				////NT_3(holder3, scaler);
+				//NT_3(holder3, (50/holder3.R1));
+				////NT_3(holder3, (75/holder3.R1));
+				
+				////struct comp_3 holder4 = setValues_3(2400, 100000, 0.001, f4.filter_t);	
+				//struct comp_3 holder4 = setValues_3(f4.cf_MHz, f4.bw_kHz, f4.ind_uH, f4.filter_t);	
+				struct comp_3 holder4 = putValues_3(f4);
+				printf("\nInitial TEST 4 settings:\nmain loop number %d\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d",k,f4.cf_MHz,f4.bw_kHz,f4.filter_t);			
+				printBPF3(holder4);
+				////printf("\nSanity Check\ttest 4 main loop\nIteration number %d\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d\n",k,f4.cf_MHz,f4.bw_kHz,f4.filter_t);			
+				//NT_3(holder4, (50/holder4.R1));
+				
+				struct comp_3 holder5 = putValues_3(f5);
+				printf("\nInitial TEST 5 settings:\nmain loop number %d\tCenter Freq %.4f MHz\t\tBW %.4f kHz\t\tChoice %d",k,f5.cf_MHz,f5.bw_kHz,f5.filter_t);
+				printBPF3(holder5);
+				////printf("\nSanity Check\ttest 5 main loop\nIteration number %d\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d\n",k,f5.cf_MHz,f5.bw_kHz,f5.filter_t);			
+				NT_3(holder5, (50/holder5.R1));
+				
+				//fail_if((f3.cf_MHz<= 0 || f3.bw_kHz<= 0 || f3.ind_uH<= 0), "Whoah, those values dont make sense!!");
+				//fail_if((((f3.cf_MHz*MEGA)/(f3.bw_kHz*KILO)) < 10.1) , "That Q %.3f is too small, because BW is too wide");
+				//ck_assert_int_eq(((f3.cf_MHz*MEGA)/(f3.bw_kHz*KILO)), 10.0);
+				//fail_unless((rxPwrDBM(t1.PtdBm,t1.GtdB,t1.GrdB,t1.R,t1.freq))*TERA < 3690, "WTF?");
+				
+			}	
+	//}
+}
+
+//Run_BPF3_AutoTest_Loop();
+
+void Run_BPF3_AutoTest_2(void){
+	int numTests = 5;
+	float scaler = 2.2;
+	
+	struct bpf3_test filter1;	
+	filter1.cf_MHz = 2400;						
+	filter1.bw_kHz = 50000;						
+	filter1.ind_uH = 0.001;	
+	filter1.filter_t = 4;	
+	
+	printf("\nInitial TEST 1 settings:\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d",filter1.cf_MHz,filter1.bw_kHz,filter1.filter_t);			
+	////printf("\nSanity Check\ttest 3\tCenter Freq %.4f MHz\tBW %.4f kHz\tChoice %d\n",filter1.cf_MHz,filter1.bw_kHz,filter1.filter_t);
+	////struct comp_3 holder1 = computeValues_3(filter1.filter_t);
+	//struct comp_3 holder1 = setValues_3(filter1.cf_MHz, filter1.bw_kHz, filter1.ind_uH, filter1.filter_t);	
+	struct comp_3 holder1 = putValues_3(filter1);
+	printBPF3(holder1);
+	////NT_3(holder1, scaler);
+	NT_3(holder1, (50/holder1.R1));
+	////NT_3(holder1, (75/holder1.R1));
+
+	//fail_if((filter1.cf_MHz<= 0 || filter1.bw_kHz<= 0 || filter1.ind_uH<= 0), "Whoah, one of our values doesnt make sense!!");
+	//fail_if((((filter1.cf_MHz*MEGA)/(filter1.bw_kHz*KILO)) < 10.1) , "That Q %.3f is too small, because BW is too wide");
+	//ck_assert_int_eq(((filter1.cf_MHz*MEGA)/(filter1.bw_kHz*KILO)), 10.0);
+	
+}
+
+Run_BPF3_AutoTest_2();
+
