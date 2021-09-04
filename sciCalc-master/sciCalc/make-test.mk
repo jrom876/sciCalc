@@ -17,13 +17,11 @@ DEPS = linkBudgetCalc.h \
 		inrushICalc.h \
 		ustripZCalc.h
 		
-OBJ = main-test.o \
-		linkBudgetCalc.o \
-		bpf1Calc.o \
-		bpf2Calc.o \
-		bpf3Calc.o \
-		inrushICalc.o \
-		ustripZCalc.o
+OBJ = lbtest.o \
+		bpf2test.o \
+		bpf3test.o \
+		inrushItest.o \
+		ustripZtest.o
 	
 DEBUG=-g
 LIBS=-lcheck -lm -lpthread -lrt -lsubunit -lcheck_pic
@@ -46,6 +44,13 @@ bpf2test.o: bpf2test.c bpf1Calc.h bpf2Calc.h bpf3Calc.h
 bpf2test: bpf2test.o 
 	$(CC) -o bpf2test bpf2test.o $(LIBS)
 
+## Band Pass Filter 
+bpf3test.o: bpf3test.c bpf1Calc.h bpf2Calc.h bpf3Calc.h
+	checkmk bpf3test.check >bpf3test.c
+	$(CC) $(CFLAGS) -c bpf3test.c	
+bpf3test: bpf3test.o 
+	$(CC) -o bpf3test bpf3test.o $(LIBS)
+
 ## Inrush Current
 inrushItest.o: inrushItest.c inrushICalc.h
 	checkmk inrushItest.check >inrushItest.c
@@ -61,5 +66,44 @@ ustripZtest: ustripZtest.o
 	$(CC) -o ustripZtest ustripZtest.o $(LIBS)
 
 clean:
-	rm -f $(OBJ)/*.o
+	rm -f $(OBJ)
 	
+#************************************************************************
+#*** Targets ***
+
+#~ main: main.o
+#~ 	./main
+
+#~ main.o : main.c \
+#~ 		tempCalc.h \
+#~ 		vswrCalc.h \
+#~ 		ustripZCalc.h \
+#~ 		fresnelCalc.h \
+#~ 		linkBudgetCalc.h
+#~ 	$(CC) -c main.c $(LIBS)
+
+#~ tempCalc.o : tempCalc.c tempCalc.h
+#~ 	$(CC) -c tempCalc.c $(LIBS)
+
+#~ vswrCalc.o : vswrCalc.c vswrCalc.h
+#~ 	$(CC) -c vswrCalc.c $(LIBS)
+
+#~ ustripZCalc.o : ustripZCalc.c ustripZCalc.h
+#~ 	$(CC) -c ustripZCalc.c $(LIBS)
+
+#~ fresnelCalc.o : fresnelCalc.c fresnelCalc.h
+#~ 	$(CC) -c fresnelCalc.c $(LIBS)
+
+#~ linkBudgetCalc.o : linkBudgetCalc.c linkBudgetCalc.h
+#~ 	$(CC) -c linkBudgetCalc.c $(LIBS)
+
+#~ antennaGainCalc.o : antennaGainCalc.c linkBudgetCalc.h
+#~ 		$(CC) -c antennaGainCalc.c $(LIBS)
+
+#~ clean:
+#~ 	rm main main.o tempCalc.o vswrCalc.o ustripZCalc.o fresnelCalc.o linkBudgetCalc.o antennaGainCalc.o
+
+#~ lbtest: lbtest.o
+#~ 	./lbtest
+#~ bpf2test: bpf2test.o
+#~ 	./bpf2test
