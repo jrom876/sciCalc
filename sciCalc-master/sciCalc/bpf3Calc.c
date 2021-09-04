@@ -1,8 +1,8 @@
 //	Package:	sciCalc
 //	File:		bpf3Calc.c 
 //	Purpose:	Calculate Band Pass Filter component values for 
-//			Butterworth, Chebychev, and Bessel filters with
-//			3 resonant circuits using the K-Q Method
+//				Butterworth, Chebychev, and Bessel filters with
+//				3 resonant circuits using the K-Q Method
 //	Author:		jrom876
 
 /**
@@ -42,10 +42,17 @@
 #include "ustripZCalc.h"
 #include "inrushICalc.h"
 #include "complexCalc.h"
+
+/// STANDARD DEFINITIONS FOR PROJECT SCICALC 
+#define PI	3.14159265358979323846 // ad infinitum
+#define LIGHT_SPEED		299792458 // meters per second
+#define DATA_SIZE 1000
+#define DELTA 1.0e-6
 #define KILO 1000
 #define MEGA 1000000
 #define GIGA 1000000000
 #define TERA 1000000000000 
+
 #define TXT_FILE "bpf2Data.txt"
 
 float cntrFreqHz_3 = 0;
@@ -53,47 +60,48 @@ float bw3dB_kHz_3 = 0.000001;
 float inductorValue_H_3 = 0;
 float Qbp_3 = 0;
 int choice_3 = 0;
-float km_3 = 0; // magnitude scaling factor
-float kf_3 = 0; // frequency scaling factor
+float kmag_3 = 0; // magnitude scaling factor
+float kfreq_3 = 0; // frequency scaling factor
 //~ float tempf;
 
 /**
  * Steps for 3 element k-q method:
- *	1) 	Choose filter type
- * 	2) 	Calculate the pass band “Q”, Qbp
- * 			Qbp = Fo / BW 3dB
+ *		1) 	Choose filter type
+ * 		2) 	Calculate the pass band “Q”, Qbp
+ * 				Qbp = Fo / BW 3dB
  *  	3) 	Calculate the loaded Q for input and output resonator, Q1 and Q3
- * 			Q1_3 = Qbp * q1_3
- * 			Q3_3 = Qbp * q3_3
+ * 				Q1_3 = Qbp * q1_3
+ * 				Q3_3 = Qbp * q3_3
  *  	4) 	Calculate the coupling coefficients, K12 and K23, for this filter
- * 			K12_3 = k12_3 / Qbp
- * 			K23_3 = k23_3 / Qbp
+ * 				K12_3 = k12_3 / Qbp
+ * 				K23_3 = k23_3 / Qbp
  *  	5) 	Choose Inductor value
- * 	6)	Calculate Resistor values, R1 and R2
+ * 		6)	Calculate Resistor values, R1 and R2
  *  	7) 	Calculate the nodal capacitance, Cnode3, which resonates with the inductor at Fo
- * 			Cnode_3 = 1 / ((2Pi*Fo)^2 * L)
+ * 				Cnode_3 = 1 / ((2Pi*Fo)^2 * L)
  *  	8) 	Calculate the coupling capacitors, C12 and C23
- * 			C12_3 = K12_3 * Cnode3
- * 			C23_3 = K23_3 * Cnode3
- *	9)	Finally the values of C1, C2 and C3 can be calculated. 
- *		These are the capacitors that resonate with the inductors at Fo, 
- *		less the value of the coupling capacitor C12
- * 			C1_3 = Cnode3 – C12_3
- * 			C2_3 = Cnode3 – C12_3 – C23_3
- * 			C3_3 = Cnode3 – C12_3
+ * 				C12_3 = K12_3 * Cnode3
+ * 				C23_3 = K23_3 * Cnode3
+ *		9)	Finally the values of C1, C2 and C3 can be calculated. 
+ *			These are the capacitors that resonate with the inductors at Fo, 
+ *			less the value of the coupling capacitor C12
+ * 				C1_3 = Cnode3 – C12_3
+ * 				C2_3 = Cnode3 – C12_3 – C23_3
+ * 				C3_3 = Cnode3 – C12_3
  **/
 
 struct comp_3 {
-	float R1;
-	float R2;
-	float C1;
-	float C2;
-	float C3;
-	float C12;
-	float C23;
-	float L1;	
-	float L2;	
-	float L3;	
+	float R1;  float R2;
+	float C1;  float C2; 	float C3;
+	float C12; float C23;
+	float L1;  float L2;	float L3;	
+};
+
+struct bpf3_test {
+    float 	cf_MHz;
+    float 	bw_kHz;
+    float 	ind_uH;
+    int 	filter_t;
 };
 
 /// variable declarations for 3 resonant circuits ///
@@ -108,7 +116,7 @@ float lCH_05_3, q1CH_05_3,  q3CH_05_3,  k12CH_05_3, k23CH_05_3,	cnodeCH_05_3; //
 float lCH_1_3,  q1CH_1_3,   q3CH_1_3,   k12CH_1_3,  k23CH_1_3,	cnodeCH_1_3;  // Chebychev 1.0dB
 float lBES_3,   q1BES_3,    q3BES_3,    k12BES_3,   k23BES_3,	cnodeBES_3;   // Bessel
 
-// Qbp = Fo / BW 3dB
+//	Qbp = Fo / BW 3dB
 float calcQbp_3(float cf, float bw){
 	Qbp_3 = (cf/bw);
 	//~ printf("Qbp = %f\n",Qbp); // DBPRINT
@@ -118,6 +126,8 @@ void setKQValues_3(int ch){
 	f3dB2rbw = f3dB2rbw_3;
 	choice_3 = ch;
 	switch(choice_3){
+// 3 resonant circuit filters
+		// 3 resonant circuit filters
 		case 1:
 		  q1_3 = Q1BW_3;
 		  k12_3 = K12BW_3;
@@ -220,7 +230,9 @@ float calcBW_3 (float r, float c) {
 }
 void printBPF3(struct comp_3 f1) {
 	//~ printf("\nprintBPF3\n");
-	printf("\n");
+	printf("\n\n=======<<< START FILTER DATA >>>=======\n");
+	//~ printf("\nPrinting NEW BPF3 values:\n");
+	//~ printf("\n");
 	printf("%.6f nF\tC1\n",f1.C1*GIGA);
 	printf("%.6f nF\tC2\n",f1.C2*GIGA);
 	printf("%.6f nF\tC3\n",f1.C3*GIGA);
@@ -234,22 +246,24 @@ void printBPF3(struct comp_3 f1) {
 	float cbw1 = (1/(f1.R1*f1.C1*PI));
 	float cbw2 = (1/(f1.R2*f1.C3*PI)); // *f3dB2rbw
 	//calcBW_3(f1.R1,f1.C1);
-	printf("\nTarget BW:\t\t\t%.3f kHz\t\t%.6f MHz",bw3dB_kHz_3/KILO,bw3dB_kHz_3/MEGA);
-	printf("\nCalculated BW:\t\t\t%.3f kHz\t\t%.6f MHz\n",(cbw1/KILO),(cbw1/MEGA));
-	printf("Difference between the two:\t %.3f kHz\t\t%.6f MHz\n",((bw3dB_kHz_3-cbw1)/KILO),((bw3dB_kHz_3-cbw1)/MEGA));
-	printf("Deviation from Target BW:\t%.3f percent\n",(((bw3dB_kHz_3-cbw1)/KILO)/(bw3dB_kHz_3/KILO))*100);
+	printf("\nCenter Frequency:\t\t%.2f MHz\t",cntrFreqHz_3/MEGA);
+	printf("\nTarget BW:\t\t\t%.3f kHz\t\t%.6f MHz\n",bw3dB_kHz_3/KILO,bw3dB_kHz_3/MEGA);
+	printf("\nR1 C1 Calculated BW:\t\t%.3f kHz\t\t%.6f MHz\n",(cbw1/KILO),(cbw1/MEGA));
+	printf("Difference between TBW & CBW:\t%.3f kHz\t\t%.6f MHz\n",((bw3dB_kHz_3-cbw1)/KILO),((bw3dB_kHz_3-cbw1)/MEGA));
+	printf("Deviation from Target BW:\t%.3f percent\n",(((bw3dB_kHz_3-cbw1)/KILO)/(bw3dB_kHz_3/KILO))*-100);
 	//calcBW_3(f1.R2,f1.C3);
-	printf("\nTarget BW:\t\t\t%.3f kHz\t\t%.6f MHz",bw3dB_kHz_3/KILO,bw3dB_kHz_3/MEGA);
-	printf("\nCalculated BW (1/(PI*RC)):\t%.3f kHz\t\t%.6f MHz\n",(cbw2/KILO),(cbw2/MEGA));
+	//~ printf("\nTarget BW:\t\t\t%.3f kHz\t\t%.6f MHz",bw3dB_kHz_3/KILO,bw3dB_kHz_3/MEGA);
+	printf("\nR2 C3 Calculated BW:\t\t%.3f kHz\t\t%.6f MHz\n",(cbw2/KILO),(cbw2/MEGA));
 	//~ printf("Calculated BW * f3dB2rbw_3:\t%.3f kHz\t\t%.6f MHz\n",(cbw2/KILO)*f3dB2rbw,(cbw2/MEGA)*f3dB2rbw);
-	printf("Difference between the two:\t %.3f kHz\t\t%.6f MHz\n",((bw3dB_kHz_3-cbw2)/KILO),((bw3dB_kHz_3-cbw2)/MEGA));
-	printf("Deviation from Target BW:\t%.3f percent\n",(((bw3dB_kHz_3-cbw2)/KILO)/(bw3dB_kHz_3/KILO))*100);
+	printf("Difference between targ-calc:\t%.3f kHz\t\t%.6f MHz\n",((bw3dB_kHz_3-cbw2)/KILO),((bw3dB_kHz_3-cbw2)/MEGA));
+	printf("Deviation from Target BW:\t%.3f percent\n",(((bw3dB_kHz_3-cbw2)/KILO)/(bw3dB_kHz_3/KILO))*-100);	
+	printf("=======<<< END FILTER DATA >>>=======\n"); // DBPRINT
 }
 struct comp_3 computeValues_3(int ch){
 	struct comp_3 result;
 	float cf, bw, ind;	
 	// First we initialize globals with user input	
-	printf("Please enter Center Frequency in MHz: \n");
+	printf("\nPlease enter Center Frequency in MHz: \n");
 	scanf(" %f", &cf);		
 	cntrFreqHz_3 = cf*MEGA;
 	printf("Please enter 3dB bandwidth in kHz: \n");
@@ -312,7 +326,45 @@ struct comp_3 setValues_3 (float cf, float bw, float ind, int ch){
 	result.L1 = inductorValue_H_3;
 	result.L2 = inductorValue_H_3;
 	result.L3 = inductorValue_H_3;
-	printBPF3(result);
+	//~ printBPF3(result);
+	printf("\n");
+	return result;
+}
+
+/** 
+	putValues_3(struct bpf3_test bpf3)
+	Sets values and runs all the calculations to create and return a BPF3 
+	with the following user-defined parameters:
+		cf = center freq (fo)
+		bw = 3dB bandwidth we want 
+		ind = inductor we want 
+		ch = choice, type of filter we are creating 
+**/
+struct comp_3 putValues_3 (struct bpf3_test bpf3){
+	struct comp_3 result;
+// First we initialize globals	
+	cntrFreqHz_3 = bpf3.cf_MHz*MEGA;
+	bw3dB_kHz_3 = bpf3.bw_kHz*KILO;
+	inductorValue_H_3 = bpf3.ind_uH/MEGA;
+	//~ printf("cntrFreqHz: %.4f MHz\n",cntrFreqHz_3); // DBPRINT
+	//~ printf("bw3dB_Hz: %.4f kHz\n", bw3dB_kHz_3); // DBPRINT
+// Now we calculate values in the proper order
+	setKQValues_3(bpf3.filter_t);
+	calcQbp_3(cntrFreqHz_3, bw3dB_kHz_3);
+	calcQ1_3(); calcQ3_3(); calcK12_3(); calcK23_3();
+	//~ printf("\n");
+	calcCNode3(cntrFreqHz_3, inductorValue_H_3);
+	result.C12 = calcC12_3();
+	result.C23 = calcC23_3();
+	result.C1 = calcC1_3();
+	result.C2 = calcC2_3();
+	result.C3 = calcC3_3();
+	result.R1 = calcR1_3();
+	result.R2 = calcR2_3();
+	result.L1 = inductorValue_H_3;
+	result.L2 = inductorValue_H_3;
+	result.L3 = inductorValue_H_3;
+	//~ printBPF3(result);
 	printf("\n");
 	return result;
 }
@@ -346,39 +398,40 @@ float modBPF_C_3(float wl, float r, float frq){
 	Norton's Transform for scaling impedance on 3-circuit BPFs (BPF3). 
 	
 	Generally we want to scale to a convenient inductor value, or we
-	may need to scale to a 50 Ohm or 75 Ohm output resistor. 
+	need to scale to a 50 Ohm or 75 Ohm output resistor. 
 	
-		fin = the BPF3 whose output stage we are modifying. We will
-			use setValues_3() to create and test our BPF3 for now.
+		fin = the BPF3 whose output stage we are modifying. We will use 
+		setValues_3() or putValues3() to create our BPF3 for now.
 				
 		scale = the transform coefficient to which we are scaling. 
-	
-	Examples:
-		NT_3(holder3, (2.2/1.0)); 		Scaling 1.0 uH to 2.2uH inductor
-		NT_3(holder3, (2.2/holder3.L3)); 	Scaling output to 2.2uH inductor
+	 
+	Example function calls:
+		NT_3(holder3, (2.2/1.0)); 			Scaling 1.0 uH to 2.2uH inductor
+		NT_3(holder3, (2.2/holder3.L1)); 	Scaling output to 2.2uH inductor
 		NT_3(holder3, (50/holder3.R2)); 	Scaling output to 50 Ohm resistor
 		NT_3(holder3, (75/holder3.R2)); 	Scaling output to 75 Ohm resistor
 **/
 struct comp_3 NT_3 (struct comp_3 fin, float scale) {
 	struct comp_3 result;
-	//~ printf("\n******* Begin Norton's Transform *******\n"); // DBPRINT
-	//~ printf("\nRunning Norton's Transform on this BPF"); // DBPRINT
-	//~ printf("\nNOTE: Use only on 3-circuit BPFs for now\n"); // DBPRINT
-	//~ printf("Scaling impedance by:\t%.6f times\n",scale); // DBPRINT
-	//~ printf("\nComponent values before Norton's transform:"); // DBPRINT
-	//~ printBPF3(fin); // DBPRINT
+	printf("\n\n******* Begin Norton's Transform *******\n"); // DBPRINT
+	printf("\nRunning Norton's Transform on this BPF"); // DBPRINT
+	printf("\nNOTE: Use only on 3-circuit BPFs for now\n"); // DBPRINT
+	printf("Scaling Factor:\t%.6f\tRatio: %4f to 1\n",scale,(1/scale)); // DBPRINT
+	printf("\nComponent values before Norton's transform:"); // DBPRINT
+	printBPF3(fin); // DBPRINT
 	
 /// Begin Transforming Impedance of our input filter (fin)
 /// First we scale components of the output resonant circuit
 	fin.C3 /= scale;
 	fin.R2 *= scale;
 	fin.L3 *= scale;
-	//printf("\n******************************************\n"); // DBPRINT
+	//~ //printf("\n******************************************\n"); // DBPRINT
 	//~ printf("\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"); // DBPRINT
 	//~ printf("\nFirst we scale all components in the last resonant circuit"); // DBPRINT
-	//~ printf("\nR2 = %f * %f ohms = %f ohms\n",fin.R1,scale,fin.R2); // DBPRINT
-	//~ printf("C3 = %f / %f nF = %f nF\n",fin.C1*GIGA,scale,fin.C3*GIGA); // DBPRINT
-	//~ printf("L3 = %f * %f uH = %f uH\n",fin.L1*MEGA,scale,fin.L3*MEGA); // DBPRINT
+	//~ printf("\nScaling Factor:\t%.6f\n",scale); // DBPRINT
+	//~ printf("\nR2 = %f ohms * %f = %f ohms\n",fin.R1,scale,fin.R2); // DBPRINT
+	//~ printf("C3 = %f nF / %f= %f nF\n",fin.C1*GIGA,scale,fin.C3*GIGA); // DBPRINT
+	//~ printf("L3 = %f uH * %f= %f uH\n",fin.L1*MEGA,scale,fin.L3*MEGA); // DBPRINT
 /// Transformers change impedance by the square of the number of turns,
 /// so our notional turns ratio, Nratio = sqrt of the turns ratio, L1/L3
 	float Nratio = sqrt(fin.L1/fin.L3);
@@ -386,11 +439,22 @@ struct comp_3 NT_3 (struct comp_3 fin, float scale) {
 	//~ printf("\nNratio:\t%.4f\n",Nratio); // DBPRINT
 	//~ printf("\nThen we use Nratio to calculate impedance inverter components (nc1, nc12, and nc2)\n"); // DBPRINT
 /// The Norton Transform virtual cap calculations
+	//~ printf("nc1 = (1 - Nratio) * C23 = .6f * %.6f = %.6f nF\n",1-Nratio,fin.C23,((1-Nratio)*fin.C23)*GIGA); // DBPRINT
+	//~ printf("1 - Nratio = %.6f\n",1-Nratio);
+	//~ printf("\nnc1 = (1 - Nratio) * C23 = %.6f * %.6f\t\t\t = %.6f nF\n"
+				//~ ,1-Nratio,fin.C23*GIGA,((1-Nratio)*fin.C23)*GIGA); // DBPRINT
+	//~ printf("nc12 = Nratio * C23 = %.6f * %.6f\t\t\t = %.6f nF\n"
+				//~ ,Nratio, fin.C23*GIGA, (Nratio)*(fin.C23*GIGA)); // DBPRINT
+	//~ printf("nc2 = Nratio * C23 * (Nratio - 1) = %.6f * %.6f * %.6f = %.6f nF\n"
+				//~ ,Nratio, fin.C23*GIGA, Nratio-1, (Nratio)*fin.C23*(Nratio-1)*GIGA); // DBPRINT
 	float nc1 = (1-Nratio)*fin.C23;
 	float nc12 = Nratio*fin.C23;
 	float nc2 = Nratio*fin.C23*(Nratio-1);
-	//~ printf("nc1 = %.6f nF\tnc12 = %.6f nF\tnc2 = %.6f nF\n",nc1*GIGA, nc12*GIGA, nc2*GIGA); // DBPRINT
-	//~ printf("\nThen we merge our virual components into the circuit\n"); //  // DBPRINT
+	//~ printf("\nnc1 = %.6f nF\tnc12 = %.6f nF\tnc2 = %.6f nF\n",nc1*GIGA, nc12*GIGA, nc2*GIGA); // DBPRINT
+	//~ printf("\nThen we merge our virtual components into the circuit\n"); //  // DBPRINT
+	//~ printf("\nC2 + nc1 ==>\t %.6f nF + %.6f nF\t = %.6f nF\n",fin.C2*GIGA,nc1*GIGA,(fin.C2+nc1)*GIGA); //  // DBPRINT
+	//~ printf("C23 = nc12 ==>\t %.6f nF\t\t\t = %.6f nF\n",fin.C23*GIGA,nc12*GIGA); //  // DBPRINT
+	//~ printf("C3 + nc2 ==>\t %.6f nF + %.6f nF\t = %.6f nF\n",fin.C3*GIGA,nc2*GIGA,(fin.C3+(nc2))*GIGA); //  // DBPRINT
 	//~ //printf("\n******************************************\n"); // DBPRINT
 	//~ printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"); // DBPRINT
 /// Apply the transform to the appropriate filter caps
@@ -398,7 +462,8 @@ struct comp_3 NT_3 (struct comp_3 fin, float scale) {
 	fin.C23 = nc12;
 	fin.C3 += nc2;
 /// End Transforming Impedance 
-
+	//~ printf("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"); // DBPRINT
+	
 	result = fin;
 	printf("\nComponent values after Norton's transform:"); // DBPRINT
 	printBPF3(result); // DBPRINT
