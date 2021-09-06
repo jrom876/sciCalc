@@ -31,12 +31,12 @@
 
 /**
 3 element filters
-Filter Type 			q1 		k12 	k23 	q3
-Butterworth 			1 		0.707 	0.707 	1
+Filter Type 		q1 	k12 	k23 	q3
+Butterworth 		1 	0.707 	0.707 	1
 Chebychev 0.1dB ripple 	1.433 	0.662 	0.662 	1.433
 Chebychev 0.5dB ripple 	1.864 	0.647 	0.647 	1.864
 Chebychev 1dB ripple 	2.210 	0.638 	0.638 	2.210
-Bessel 					0.337 	1.748 	0.684 	2.203
+Bessel 			0.337 	1.748 	0.684 	2.203
 
 Ratio of 3dB to ripple bandwidth
 N 		f3dB / f ripple
@@ -45,7 +45,7 @@ N 		f3dB / f ripple
 5 		1.0338
 **/
 
-#define Q1BW_3    		1.0 // Butterworth k-q values
+#define Q1BW_3    	1.0 // Butterworth k-q values
 #define K12BW_3     	0.707
 #define K23BW_3     	0.707
 #define Q3BW_3      	1.0
@@ -53,7 +53,7 @@ N 		f3dB / f ripple
 #define Q1CH_01DB_3 	1.433 // Chebychev 0.1dB k-q values
 #define K12CH_01DB_3 	0.662
 #define K23CH_01DB_3 	0.662
-#define Q3CH_01DB_3		1.433
+#define Q3CH_01DB_3	1.433
 
 #define Q1CH_05DB_3 	1.864  // Chebychev 0.5dB k-q values
 #define K12CH_05DB_3 	0.647
@@ -70,11 +70,11 @@ N 		f3dB / f ripple
 #define K23BES_3    	0.684
 #define Q3BES_3     	2.203
 
-#define f3dB2rbw_3		1.0949 // Ratio of 3dB to ripple bandwidth
-#define f3dB2rbw_4		1.0530 // for 3, 4, and 5 resonant circuits
-#define f3dB2rbw_5		1.0338
+#define f3dB2rbw_3	1.0949 // Ratio of 3dB to ripple bandwidth
+#define f3dB2rbw_4	1.0530 // for 3, 4, and 5 resonant circuits
+#define f3dB2rbw_5	1.0338
 
-//#define OBP       2
+//#define OBP       	2
 float calcQbp_3(float cf, float bw);
 void setKQValues_3(int choice);
 
