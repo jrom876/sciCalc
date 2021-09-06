@@ -109,14 +109,14 @@ float l_3, c12_3, c23_3, c1_3, c2_3, c3_3, r1_3, r2_3;
 float q1_3, q2_3, q3_3, k12_3, k23_3, cnode_3;
 float f3dB2rbw;
 
-//  inductor    Q1          Q3          K12BW       K23BW		CNode
+//  inductor    Q1          Q3          K12BW       K23BW	CNode
 float lBW_3,    q1BW_3,     q3BW_3,     k12BW_3,    k23BW_3,	cnodeBW_3;    // Butterworth
 float lCH_01_3, q1CH_01_3,  q3CH_01_3,  k12CH_01_3, k23CH_01_3,	cnodeCH_01_3; // Chebychev 0.1dB
 float lCH_05_3, q1CH_05_3,  q3CH_05_3,  k12CH_05_3, k23CH_05_3,	cnodeCH_05_3; // Chebychev 0.5dB
 float lCH_1_3,  q1CH_1_3,   q3CH_1_3,   k12CH_1_3,  k23CH_1_3,	cnodeCH_1_3;  // Chebychev 1.0dB
 float lBES_3,   q1BES_3,    q3BES_3,    k12BES_3,   k23BES_3,	cnodeBES_3;   // Bessel
 
-//	Qbp = Fo / BW 3dB
+// Qbp = Fo / BW 3dB
 float calcQbp_3(float cf, float bw){
 	Qbp_3 = (cf/bw);
 	//~ printf("Qbp = %f\n",Qbp); // DBPRINT
