@@ -36,7 +36,8 @@ void Run_BPF3_AutoTest_Loop(void){
 	int j, k;
 	int numTests = 5;
 	float scaler = 2.2;
-	
+
+	// We create and initialize some test filters to put through their paces
 	struct bpf3_test f3;	
 	f3.cf_MHz = 2400;						
 	f3.bw_kHz = 100000;						
