@@ -1,5 +1,5 @@
 //	Package:	sciCalc
-//	File:		pssr.c 
+//	File:		psrr.c 
 //	Purpose:	Calculate Power Supply Rejection Ratio for LDOs
 //	Author:		jrom876
 
@@ -52,7 +52,7 @@ And since that's 60 dB of rejection, the sign is negative so:
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-#include "pssr.h"
+#include "psrr.h"
 
 /// STANDARD DEFINITIONS FOR PROJECT SCICALC 
 #define PI	3.14159265358979323846 // ad infinitum sine repeto
@@ -64,13 +64,13 @@ And since that's 60 dB of rejection, the sign is negative so:
 #define GIGA 1000000000
 #define TERA 1000000000000 
 
-float pssrdB(float Vripplein, float Vrippleout) {
+float psrrdB(float Vripplein, float Vrippleout) {
 	float result = 20*log10(Vripplein/Vrippleout);
-	printf("pssrdB result = %0.3f dB\n", result);
+	printf("psrrdB result = %0.3f dB\n", result);
 	return result;
 }
 
-float pssr(float dVsupp, float VgaindB, float dVout) {
+float psrr(float dVsupp, float VgaindB, float dVout) {
 	float vgdB = (pow(10, (VgaindB/10)));
 	printf("vgdB = %0.3f\n", vgdB);
 	float result = 10*log10(((dVsupp*dVsupp)*(vgdB*vgdB))/(dVout*dVout));
@@ -79,9 +79,9 @@ float pssr(float dVsupp, float VgaindB, float dVout) {
 	return result;
 }
 
-float ripple (float pssr, float clGain) {
+float ripple (float psrr, float clGain) {
 	clGain = 10*log10(clGain);
-	float exponent = -1 * (pssr - clGain);
+	float exponent = -1 * (psrr - clGain);
 	float result = pow(10,(exponent/20));
 	printf("exponent = %0.3f\n", exponent);
 	printf("ripple result = %0.6f\n", result);
@@ -89,8 +89,8 @@ float ripple (float pssr, float clGain) {
 }
 
 int main(int argc, char const *argv[]) {
-	//~ pssr(5, 10, 3.3);
-	ripple (pssr(5, 40, 3.3), 40);
+	//~ psrr(5, 10, 3.3);
+	ripple (psrr(5, 40, 3.3), 40);
 	//~ ripple (100, 40);
 	return 0;
 }
