@@ -1,6 +1,6 @@
-// pssr.h 
-#ifndef PSSR_H
-#define PSSR_H
+// psrr.h 
+#ifndef PSRR_H
+#define PSRR_H
 
 /**
 	Copyright (C) 2024 
@@ -25,7 +25,7 @@
 
 **/
 
-float pssr(float dVsupp, float gain, float dVout);
-float ripple (float pssr, float clGain);
+float psrr(float dVsupp, float gain, float dVout);
+float ripple (float psrr, float clGain);
 
 #endif
