@@ -3,10 +3,9 @@
 #define PSSR_H
 
 /**
-	Copyright (C) 2019, 2021 
+	Copyright (C) 2024 
 	Jacob Romero, Creative Engineering Solutions, LLC
 	cesllc876@gmail.com
-	admin@jrom.io 
 
 	This program is free software; you can redistribute it
 	and/or modify it under the terms of the GNU General Public  
