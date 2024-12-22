@@ -75,7 +75,7 @@ float psrr(float dVsupp, float VgaindB, float dVout) {
 	printf("vgdB = %0.3f\n", vgdB);
 	float result = 10*log10(((dVsupp*dVsupp)*(vgdB*vgdB))/(dVout*dVout));
 	//~ float result = 10*log10(((dVsupp*dVsupp)*(VgaindB*VgaindB))/(dVout*dVout));
-	printf("pssr result = %0.6f dB\n", result);
+	printf("psrr result = %0.6f dB\n", result);
 	return result;
 }
 
