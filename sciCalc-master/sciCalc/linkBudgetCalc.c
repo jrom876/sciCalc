@@ -39,8 +39,8 @@
 #include "linkBudgetCalc.h"
 
 /// STANDARD DEFINITIONS FOR PROJECT SCICALC 
-#define PI	3.14159265358979323846 	// ad infinitum sine repeto
-#define LIGHT_SPEED		299792458.0 	// meters per second
+#define PI		3.14159265358979323846 	// ad infinitum sine repeto
+#define LIGHT_SPEED	299792458.0 		// meters per second
 #define STACK_OVERFLOW	2147483648		// Hex 0x80000000
 #define DATA_SIZE 1000
 #define DELTA 1.0e-6
@@ -59,13 +59,13 @@
 
 /// STANDARD DEFINITIONS FOR LIGHT INTENSITY AND ELECTRIC FIELD CALCULATIONS
 #define AIR_REFRACTIVE_INDEX 1.00027717
-#define E0 8.8541878128*PICO				// Permittivity of Free Space in Farads per meter
-#define MU0 1.25663706212*MICRO				// Permeability of Free Space in Newtons per square meter
+#define E0 8.8541878128*PICO			// Permittivity of Free Space in Farads per meter
+#define MU0 1.25663706212*MICRO			// Permeability of Free Space in Newtons per square meter
 #define EPSILON_0 1/(MU0*(LIGHT_SPEED**2))	// Permittivity of Free Space Equation
 #define E_CONSTANT 1/(4*PI*EPSILON_0)
-#define ELECTRON_CHARGE 1.6e-19 			// Charge of an electron in Coulombs
-#define RADIUS_HELIUM_ATOM 26.5e-12			// Radius of a Helium atom in meters
-#define LED_ARRAY_RADIUS 0.35 				// meters from LED array to sample plate
+#define ELECTRON_CHARGE 1.6e-19 		// Charge of an electron in Coulombs
+#define RADIUS_HELIUM_ATOM 26.5e-12		// Radius of a Helium atom in meters
+#define LED_ARRAY_RADIUS 0.35 			// meters from LED array to sample plate
 #define ETA_T (eta * zmismatch)
 #define LAMBDA (LIGHT_SPEED/frequency)
 #define FREQUENCY (LIGHT_SPEED/lambda)
@@ -133,29 +133,30 @@ float getPLF(float phi) {
 }
 
 float antGainFromFreq(float eff, float ap, float fr){
-  float lam = getLambda(fr);
-  float antgain = ((10*log10((eff*4*PI*ap)/(lam*lam))));
-  printf("Antenna Gain = %f\n\n",antgain); // DBPRINT
-  return antgain;
+	float lam = getLambda(fr);
+	float antgain = ((10*log10((eff*4*PI*ap)/(lam*lam))));
+	printf("Antenna Gain = %f\n\n",antgain); // DBPRINT
+	return antgain;
 }
 
 float getLambda(float freq){
-  float clambda = (LIGHT_SPEED/freq);
-  //~ printf("\nwavelength = %.6f meters\n",clambda); // DBPRINT
-  return clambda;
+	float clambda = (LIGHT_SPEED/freq);
+	//~ printf("\nwavelength = %.6f meters\n",clambda); // DBPRINT
+	return clambda;
 }
+
 // use lambda in meters 
 float getFreq(float lam){
-  float freq = (LIGHT_SPEED/lam);
-  //~ printf("\nfrequency = %.4f MHz\n",freq/MEGA); // DBPRINT
-  return freq;
+	float freq = (LIGHT_SPEED/lam);
+	//~ printf("\nfrequency = %.4f MHz\n",freq/MEGA); // DBPRINT
+	return freq;
 }
 
 ////////////////////////////////
 ////////////////////////////////
 char * floatToStringLB(float f){
 	char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 
 void storeDataInFileLB(float input){
