@@ -38,14 +38,10 @@
 #include "bpf1Calc.h"
 #include "bpf2Calc.h"
 #include "bpf3Calc.h"
-#include "ustripZCalc.h"
-#include "inrushICalc.h"
-#include "complexCalc.h"
-
 
 /// STANDARD DEFINITIONS FOR PROJECT SCICALC 
-#define PI	3.14159265358979323846 	// ad infinitum sine repeto
-#define LIGHT_SPEED		299792458.0 	// meters per second
+#define PI		3.14159265358979323846 	// ad infinitum sine repeto
+#define LIGHT_SPEED	299792458.0 		// meters per second
 #define STACK_OVERFLOW	2147483648		// Hex 0x80000000
 #define DATA_SIZE 1000
 #define DELTA 1.0e-6
@@ -75,7 +71,6 @@
 #define LAMBDA (LIGHT_SPEED/frequency)
 #define FREQUENCY (LIGHT_SPEED/lambda)
  
-
 #define TXT_FILE "bpf2Data.txt"
 
 float cntrFreqHz_3 = 0;
@@ -89,8 +84,8 @@ float kfreq_3 = 0; // frequency scaling factor
 
 /**
  * Steps for 3 element k-q method:
- *		1) 	Choose filter type
- * 		2) 	Calculate the pass band “Q”, Qbp
+ *	1) 	Choose filter type
+ * 	2) 	Calculate the pass band “Q”, Qbp
  * 				Qbp = Fo / BW 3dB
  *  	3) 	Calculate the loaded Q for input and output resonator, Q1 and Q3
  * 				Q1_3 = Qbp * q1_3
@@ -99,15 +94,15 @@ float kfreq_3 = 0; // frequency scaling factor
  * 				K12_3 = k12_3 / Qbp
  * 				K23_3 = k23_3 / Qbp
  *  	5) 	Choose Inductor value
- * 		6)	Calculate Resistor values, R1 and R2
+ * 	6)	Calculate Resistor values, R1 and R2
  *  	7) 	Calculate the nodal capacitance, Cnode3, which resonates with the inductor at Fo
  * 				Cnode_3 = 1 / ((2Pi*Fo)^2 * L)
  *  	8) 	Calculate the coupling capacitors, C12 and C23
  * 				C12_3 = K12_3 * Cnode3
  * 				C23_3 = K23_3 * Cnode3
- *		9)	Finally the values of C1, C2 and C3 can be calculated. 
- *			These are the capacitors that resonate with the inductors at Fo, 
- *			less the value of the coupling capacitor C12
+ *	9)	Finally the values of C1, C2 and C3 can be calculated. 
+ *		These are the capacitors that resonate with the inductors at Fo, 
+ *		less the value of the coupling capacitor C12
  * 				C1_3 = Cnode3 – C12_3
  * 				C2_3 = Cnode3 – C12_3 – C23_3
  * 				C3_3 = Cnode3 – C12_3
@@ -429,7 +424,7 @@ float modBPF_C_3(float wl, float r, float frq){
 		scale = the transform coefficient to which we are scaling. 
 	 
 	Example function calls:
-		NT_3(holder3, (2.2/1.0)); 			Scaling 1.0 uH to 2.2uH inductor
+		NT_3(holder3, (2.2/1.0)); 		Scaling 1.0 uH to 2.2uH inductor
 		NT_3(holder3, (2.2/holder3.L1)); 	Scaling output to 2.2uH inductor
 		NT_3(holder3, (50/holder3.R2)); 	Scaling output to 50 Ohm resistor
 		NT_3(holder3, (75/holder3.R2)); 	Scaling output to 75 Ohm resistor
@@ -512,7 +507,7 @@ struct comp_3 NT_3 (struct comp_3 fin, float scale) {
 ////////////////////////////////////////////
 char * floatToStringBPF3(float f){
 	char buffer[DATA_SIZE];
-    return gcvt(f,DATA_SIZE,buffer);
+    	return gcvt(f,DATA_SIZE,buffer);
 }
 void storeDataInFileBPF3(float input){
 	FILE * fPtr = fopen(TXT_FILE, "a");
