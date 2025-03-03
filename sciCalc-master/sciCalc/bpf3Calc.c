@@ -43,20 +43,20 @@
 #define PI		3.14159265358979323846 	// ad infinitum sine repeto
 #define LIGHT_SPEED	299792458.0 		// meters per second
 #define STACK_OVERFLOW	2147483648		// Hex 0x80000000
-#define DATA_SIZE 1000
-#define DELTA 1.0e-6
-#define MILLI 1.0e-3
-#define MICRO 1.0e-6
-#define NANO 1.0e-9
-#define PICO 1.0e-12
-#define FEMTO 1.0e-15
-#define ATTO 1.0e-18
-#define KILO 1.0e3
-#define MEGA 1.0e6
-#define GIGA 1.0e9
-#define TERA 1.0e12 
-#define true 1
-#define false 0
+#define DATA_SIZE 	1000
+#define DELTA 		1.0e-6
+#define MILLI 		1.0e-3
+#define MICRO 		1.0e-6
+#define NANO 		1.0e-9
+#define PICO 		1.0e-12
+#define FEMTO 		1.0e-15
+#define ATTO 		1.0e-18
+#define KILO 		1.0e3
+#define MEGA 		1.0e6
+#define GIGA 		1.0e9
+#define TERA 		1.0e12 
+#define true 		1
+#define false 		0
 
 /// STANDARD DEFINITIONS FOR LIGHT INTENSITY AND ELECTRIC FIELD CALCULATIONS
 #define AIR_REFRACTIVE_INDEX 1.00027717
@@ -144,8 +144,7 @@ void setKQValues_3(int ch){
 	f3dB2rbw = f3dB2rbw_3;
 	choice_3 = ch;
 	switch(choice_3){
-// 3 resonant circuit filters
-		// 3 resonant circuit filters
+	// 3 resonant circuit filters
 		case 1:
 		  q1_3 = Q1BW_3;
 		  k12_3 = K12BW_3;
