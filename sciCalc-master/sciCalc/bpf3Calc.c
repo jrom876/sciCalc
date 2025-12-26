@@ -71,7 +71,7 @@
 #define LAMBDA (LIGHT_SPEED/frequency)
 #define FREQUENCY (LIGHT_SPEED/lambda)
  
-#define TXT_FILE "bpf2Data.txt"
+#define TXT_FILE "bpf3Data.txt"
 
 float cntrFreqHz_3 = 0;
 float bw3dB_kHz_3 = 0.000001;
